@@ -1,0 +1,14 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome To Your Profile Page</h1>
+   
+    <h2>@Model.Name got access to the following claims</h2>
+    @foreach (var claims in Model.Claims)
+    {
+        <p>@claims.Type : @claims.Value @claims.Issuer @claims.OriginalIssuer @claims.Subject</p>
+    }
+</div>
