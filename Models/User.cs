@@ -35,19 +35,6 @@ namespace CookieAuthN.Models
             return true;
         }
 
-        public override int GetHashCode()
-        {
-            return UserName.GetHashCode() ^ Password.GetHashCode();
-        }
-
-        public static bool operator ==(User x, User y)
-        {
-            return Equals(x,y);
-        }
-        public static bool operator !=(User x, User y)
-        {
-            return !(x==y);
-        }
     }
 
 }

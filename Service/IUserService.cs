@@ -9,6 +9,8 @@ namespace CookieAuthN.Service
     public interface IUserService
     {
         Task<bool> ValidateUserCredentialsAsync(User user);
+        Task<bool> ValidateUserCredentialsAsync(string UserName, string Password);
+        Task<User> GetUser(string UserName);
 
     }
 }

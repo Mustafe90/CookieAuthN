@@ -7,6 +7,7 @@ using CookieAuthN.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,13 +17,16 @@ namespace CookieAuthN
 {
     public class Startup
     {
-        private User[] _users = new User[]
+        private readonly User[] _users = new User[]
         {
             new User()
             {
+                Id =  1,
                 UserName = "Mustafe",
-                Password = "Senpai!",
-                DateOfBirth = DateTime.Today
+                FirstName = "Plain",
+                LastName = "hello",
+                Password = "1234",
+                DateOfBirth = new DateTime(1989, 10, 26)
             }, 
         };
         public Startup(IConfiguration configuration)
@@ -38,21 +42,20 @@ namespace CookieAuthN
             services.AddControllersWithViews();
             services.AddSingleton(_users);
             services.AddTransient<IUserService, UserService>();
+            services.AddMvc();
 
-            services.AddAuthentication(option =>
-            {
-                option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-            }).AddCookie(option =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option =>
             {
                 option.LoginPath = "/auth/login";
                 option.LogoutPath = "/auth/logout";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,6 +70,7 @@ namespace CookieAuthN
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

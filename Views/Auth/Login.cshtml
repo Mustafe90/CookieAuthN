@@ -1,0 +1,17 @@
+﻿@using CookieAuthN.Models;
+@model LoginViewModel
+
+
+<form asp-action="Login" asp-controller="Auth" method="post">
+
+    <input type="hidden" asp-for="ReturnUrl" />
+    <label>UserName</label>
+    <input type="text" asp-for="UserName" />
+    <label>Password</label>
+    <input type="password" asp-for="Password" />
+
+    <button type="submit">Register</button>
+</form>
+
+
+
